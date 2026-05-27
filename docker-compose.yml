@@ -1,0 +1,22 @@
+services:
+  cerebro-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agente-api
+    ports:
+      - "4000:4000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    restart: always
+
+  panel-frontend:
+    build:
+      context: ../agente-fronted
+      dockerfile: Dockerfile
+    container_name: agente-web
+    ports:
+      - "3000:3000"
+    depends_on:
+      - cerebro-backend
+    restart: always
